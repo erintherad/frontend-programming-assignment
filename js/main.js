@@ -215,13 +215,13 @@ var EpisodeTable = React.createClass({
     return (
         <div className="row spacer">
           <div className="col-lg-4 col-lg-offset-4">
-            <table width="100%" className="table">
+            <table width="100%" className="table table-hover">
                 <thead>
                     <tr>
-                        <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="title">Title</a></th>
+                        <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="title">User</a></th>
                         <th>Image</th>
                         <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="views">Views</a></th>
-                        <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="created_on">Created on</a></th>
+                        <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="created_on">Created On</a></th>
                     </tr>
                 </thead>
                 <tbody>{rows}</tbody>
@@ -245,7 +245,7 @@ var SearchBar = React.createClass ({
         <div className="col-lg-4 col-lg-offset-4">
           <div className="well">
             <h2 className="text-center">Youtube Playlist</h2>
-            <input ref="filterTextInput" value={this.props.filterText} onChange={this.handleChange} type="search" className="form-control" placeholder="Search for a video title..." />
+            <input ref="filterTextInput" value={this.props.filterText} onChange={this.handleChange} type="search" className="form-control" placeholder="Search for a user..." />
           </div>
         </div>
       </div>
