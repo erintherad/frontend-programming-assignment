@@ -1,134 +1,5 @@
 /** @jsx React.DOM */
 
-var EpisodeRow = React.createClass({
-  render: function() {
-      return (
-          <tr>
-              <td>{this.props.episode.title}</td>
-              <td><img className="img-responsive" src={this.props.episode.thumb_url_default}/></td>
-              <td>{this.props.episode.views}</td>
-              <td>{this.props.episode.created_on}</td>
-          </tr>
-      );
-    }
-});
-
-var EpisodeTable = React.createClass({
-	getInitialState: function () {
-    return {
-      sortBy: {
-      	column: 'title',
-      	direction: 1
-      }
-    };
-  },
-
-	handleClick: function(event) {
-		var columnName = event.target.attributes['data-column-name'].value;
-		var direction = 1;
-		if(this.state.sortBy.column == columnName) {
-			// toggle direction
-			direction = -1 * this.state.sortBy.direction;
-		}
-
-    this.setState({
-      sortBy: {
-      	column: columnName,
-      	direction: direction
-      }
-    })
-	},
-
-  render: function() {
-  	var state = this.state;
-    var props = this.props;
-    var rows = props.episodes
-      .filter(function(episode) {
-        return episode.title.toLowerCase().indexOf(props.filterText.toLowerCase()) > -1;
-      })
-      .sort(function(a, b) {
-      	var value_a = a[state.sortBy.column];
-      	var value_b = b[state.sortBy.column];
-
-      	if(typeof value_a == "string") {
-      		return value_a.localeCompare(value_b) * state.sortBy.direction;
-      	} else if(typeof value_a == "number") {
-      		return (value_a - value_b) * state.sortBy.direction;
-      	} else {
-      		console.log('unknown sort type');
-      		return 0;
-      	}
-
-      })
-      .map(function(episode){
-        return <EpisodeRow key={episode.title} episode={episode} />;
-      });
-
-
-    return (
-        <div className="row spacer">
-          <div className="col-lg-4 col-lg-offset-4">
-            <table width="100%" className="table">
-                <thead>
-                    <tr>
-                        <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="title">Title</a></th>
-                        <th>Image</th>
-                        <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="views">Views</a></th>
-                        <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="created_on">Created on</a></th>
-                    </tr>
-                </thead>
-                <tbody>{rows}</tbody>
-            </table>
-          </div>
-        </div>
-    );
-  }
-});
-
-var SearchBar = React.createClass ({
-  handleChange: function () {
-    this.props.onFilterInput(
-      this.refs.filterTextInput.getDOMNode().value
-    );
-  },
-
-  render: function() {
-    return (
-      <div className="row">
-        <div className="col-lg-4 col-lg-offset-4">
-          <div className="well">
-            <h2 className="text-center">Youtube Playlist</h2>
-            <input ref="filterTextInput" value={this.props.filterText} onChange={this.handleChange} type="search" className="form-control" placeholder="Search for a video title..." />
-          </div>
-        </div>
-      </div>
-    );
-  }
-});
-
-var FilterableEpisodeTable = React.createClass({
-  getInitialState: function () {
-    return {
-      filterText: ""
-    };
-  },
-
-  handleFilterInput: function(filterText) {
-    this.setState({
-      filterText: filterText
-    })
-  },
-
-  render: function() {
-    return (
-      <div className="spacer">
-        <SearchBar onFilterInput={this.handleFilterInput} filterText={this.state.filterText} />
-        <EpisodeTable filterText={this.state.filterText} episodes={this.props.episodes} />
-      </div>
-    );
-  }
-});
-
 var episodes = [
 {
 	thumb_url_default:"https://yt3.ggpht.com/-T0H7xR-9iA8/AAAAAAAAAAI/AAAAAAAAAAA/VA9CSBc5Q8A/s88-c-k-no/photo.jpg",
@@ -270,6 +141,140 @@ var episodes = [
 	title:"Felicia Ricci",
 	id:"UC0KJrVR7lOqDTkH2S2tjo5Q"
 }];
+
+var EpisodeRow = React.createClass({
+	changeDate: function() {
+		var date = this.props.episode.created_on;
+		return (new Date(date)).toDateString();
+	},
+
+  render: function() {
+      return (
+          <tr>
+              <td>{this.props.episode.title}</td>
+              <td><img className="img-responsive" src={this.props.episode.thumb_url_default}/></td>
+              <td>{this.props.episode.views}</td>
+              <td>{this.changeDate()}</td>
+          </tr>
+      );
+    }
+});
+
+var EpisodeTable = React.createClass({
+	getInitialState: function () {
+    return {
+      sortBy: {
+      	column: 'title',
+      	direction: 1
+      }
+    };
+  },
+
+	handleClick: function(event) {
+		var columnName = event.target.attributes['data-column-name'].value;
+		var direction = 1;
+		if(this.state.sortBy.column == columnName) {
+			// toggle direction
+			direction = -1 * this.state.sortBy.direction;
+		}
+
+    this.setState({
+      sortBy: {
+      	column: columnName,
+      	direction: direction
+      }
+    })
+	},
+
+  render: function() {
+  	var state = this.state;
+    var props = this.props;
+    var rows = this.props.episodes
+      .filter(function(episode) {
+        return episode.title.toLowerCase().indexOf(props.filterText.toLowerCase()) > -1;
+      })
+      .sort(function(a, b) {
+      	var value_a = a[state.sortBy.column];
+      	var value_b = b[state.sortBy.column];
+
+      	if(typeof value_a == "string") {
+      		return value_a.localeCompare(value_b) * state.sortBy.direction;
+      	} else if(typeof value_a == "number") {
+      		return (value_a - value_b) * state.sortBy.direction;
+      	} else {
+      		console.log('unknown sort type');
+      		return 0;
+      	}
+
+      })
+      .map(function(episode){
+        return <EpisodeRow key={episode.title} episode={episode} />;
+      });
+
+
+    return (
+        <div className="row spacer">
+          <div className="col-lg-4 col-lg-offset-4">
+            <table width="100%" className="table">
+                <thead>
+                    <tr>
+                        <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="title">Title</a></th>
+                        <th>Image</th>
+                        <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="views">Views</a></th>
+                        <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="created_on">Created on</a></th>
+                    </tr>
+                </thead>
+                <tbody>{rows}</tbody>
+            </table>
+          </div>
+        </div>
+    );
+  }
+});
+
+var SearchBar = React.createClass ({
+  handleChange: function () {
+    this.props.onFilterInput(
+      this.refs.filterTextInput.getDOMNode().value
+    );
+  },
+
+  render: function() {
+    return (
+      <div className="row">
+        <div className="col-lg-4 col-lg-offset-4">
+          <div className="well">
+            <h2 className="text-center">Youtube Playlist</h2>
+            <input ref="filterTextInput" value={this.props.filterText} onChange={this.handleChange} type="search" className="form-control" placeholder="Search for a video title..." />
+          </div>
+        </div>
+      </div>
+    );
+  }
+});
+
+var FilterableEpisodeTable = React.createClass({
+  getInitialState: function () {
+    return {
+      filterText: ""
+    };
+  },
+
+  handleFilterInput: function(filterText) {
+    this.setState({
+      filterText: filterText
+    })
+  },
+
+  render: function() {
+    return (
+      <div className="spacer">
+        <SearchBar onFilterInput={this.handleFilterInput} filterText={this.state.filterText} />
+        <EpisodeTable filterText={this.state.filterText} episodes={this.props.episodes} />
+      </div>
+    );
+  }
+});
 
 React.render(<FilterableEpisodeTable episodes={episodes} />, document.getElementById('app'));
 
