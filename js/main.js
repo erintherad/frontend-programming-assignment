@@ -218,7 +218,7 @@ var EpisodeTable = React.createClass({
             <table width="100%" className="table table-hover">
                 <thead>
                     <tr>
-                    		<th><i className="fa fa-camera fa-lg"></i></th>
+                    		<th><i className="glyphicon glyphicon-camera"></i></th>
                         <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="title">User</a></th>
                         <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="views">Views</a></th>
                         <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="created_on">Created</a></th>

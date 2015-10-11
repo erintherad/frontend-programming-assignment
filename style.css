@@ -1,3 +1,12 @@
+@font-face {
+	font-family: SourcePro;
+	src: url(SourceSansPro-Regular.otf);
+}
+
+body {
+	font-family: SourcePro;
+}
+
 a {
 	color: black;
 }
