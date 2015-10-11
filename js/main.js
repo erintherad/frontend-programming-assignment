@@ -30,7 +30,7 @@ var EpisodeTable = React.createClass({
 			// toggle direction
 			direction = -1 * this.state.sortBy.direction;
 		}
-		
+
     this.setState({
       sortBy: {
       	column: columnName,
@@ -71,10 +71,10 @@ var EpisodeTable = React.createClass({
             <table width="100%" className="table">
                 <thead>
                     <tr>
-                        <th><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="title">Title</a></th>
+                        <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="title">Title</a></th>
                         <th>Image</th>
-                        <th><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="views">Views</a></th>
-                        <th><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="created_on">Created on</a></th>
+                        <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="views">Views</a></th>
+                        <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="created_on">Created on</a></th>
                     </tr>
                 </thead>
                 <tbody>{rows}</tbody>
