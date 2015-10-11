@@ -1,4 +1,95 @@
-var data=[
+/** @jsx React.DOM */
+
+var EpisodeRow = React.createClass({
+  render: function() {
+      return (
+          <tr>
+              <td>{this.props.episode.title}</td>
+              <td><img className="img-responsive" src={this.props.episode.thumb_url_default}/></td>
+              <td>{this.props.episode.views}</td>
+              <td>{this.props.episode.created_on}</td>
+          </tr>
+      );
+    }
+});
+
+var EpisodeTable = React.createClass({
+    render: function() {
+      var props = this.props;
+      var rows = props.episodes
+        .filter(function(episode) {
+          return episode.title.toLowerCase().indexOf(props.filterText.toLowerCase()) > -1;
+        })
+        .map(function(episode){
+          return <EpisodeRow key={episode.title} episode={episode} />;
+        });
+
+
+      return (
+          <div className="row spacer">
+            <div className="col-lg-4 col-lg-offset-4">
+              <table width="100%" className="table">
+                  <thead>
+                      <tr>
+                          <th>Title</th>
+                          <th>Image</th>
+                          <th>Views</th>
+                          <th>Created on</th>
+                      </tr>
+                  </thead>
+                  <tbody>{rows}</tbody>
+              </table>
+            </div>
+          </div>
+      );
+    }
+});
+
+var SearchBar = React.createClass ({
+  handleChange: function () {
+    this.props.onFilterInput (
+      this.refs.filterTextInput.getDOMNode().value
+    );
+  },
+
+  render: function() {
+    return (
+      <div className="row">
+        <div className="col-lg-4 col-lg-offset-4">
+          <div className="well">
+            <h2 className="text-center">Youtube Playlist</h2>
+            <input ref="filterTextInput" value={this.props.filterText} onChange={this.handleChange} type="search" className="form-control" placeholder="Search for a video title..." />
+          </div>
+        </div>
+      </div>
+    );
+  }
+});
+
+var FilterableEpisodeTable = React.createClass({
+  getInitialState: function () {
+    return {
+      filterText: ""
+    };
+  },
+
+  handleFilterInput: function(filterText) {
+    this.setState({
+      filterText: filterText
+    })
+  },
+
+  render: function() {
+    return (
+      <div className="spacer">
+        <SearchBar onFilterInput={this.handleFilterInput} filterText={this.state.filterText} />
+        <EpisodeTable filterText={this.state.filterText} episodes={this.props.episodes} />
+      </div>
+    );
+  }
+});
+
+var episodes=[
 {
 	thumb_url_default:"https://yt3.ggpht.com/-T0H7xR-9iA8/AAAAAAAAAAI/AAAAAAAAAAA/VA9CSBc5Q8A/s88-c-k-no/photo.jpg",
 	views:105689500,
@@ -139,3 +230,5 @@ var data=[
 	title:"Felicia Ricci",
 	id:"UC0KJrVR7lOqDTkH2S2tjo5Q"
 }];
+
+React.render(<FilterableEpisodeTable episodes={episodes} />, document.getElementById('app'));
