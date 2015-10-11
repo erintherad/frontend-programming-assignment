@@ -142,6 +142,7 @@ var episodes = [
 	id:"UC0KJrVR7lOqDTkH2S2tjo5Q"
 }];
 
+// Component which holds the data from the episode array
 var EpisodeRow = React.createClass({
 	changeDate: function() {
 		var date = this.props.episode.created_on;
@@ -160,6 +161,7 @@ var EpisodeRow = React.createClass({
     }
 });
 
+// Component which holds the table headers and their functionality for sorting and filtering
 var EpisodeTable = React.createClass({
 	getInitialState: function () {
     return {
@@ -232,6 +234,7 @@ var EpisodeTable = React.createClass({
   }
 });
 
+// The search bar component
 var SearchBar = React.createClass ({
   handleChange: function () {
     this.props.onFilterInput(
@@ -253,6 +256,7 @@ var SearchBar = React.createClass ({
   }
 });
 
+// the Filterable table component which holds the others
 var FilterableEpisodeTable = React.createClass({
   getInitialState: function () {
     return {
