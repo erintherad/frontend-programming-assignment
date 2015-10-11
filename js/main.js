@@ -151,8 +151,8 @@ var EpisodeRow = React.createClass({
   render: function() {
       return (
           <tr>
+          		<td><img className="img-responsive" src={this.props.episode.thumb_url_default}/></td>
               <td>{this.props.episode.title}</td>
-              <td><img className="img-responsive" src={this.props.episode.thumb_url_default}/></td>
               <td>{this.props.episode.views}</td>
               <td>{this.changeDate()}</td>
           </tr>
@@ -218,10 +218,10 @@ var EpisodeTable = React.createClass({
             <table width="100%" className="table table-hover">
                 <thead>
                     <tr>
+                    		<th><i className="fa fa-camera fa-lg"></i></th>
                         <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="title">User</a></th>
-                        <th>Image</th>
                         <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="views">Views</a></th>
-                        <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="created_on">Created On</a></th>
+                        <th><span className="glyphicon glyphicon-resize-vertical"></span><a href="javascript:void(0);" onClick={this.handleClick} data-column-name="created_on">Created</a></th>
                     </tr>
                 </thead>
                 <tbody>{rows}</tbody>
@@ -243,7 +243,7 @@ var SearchBar = React.createClass ({
     return (
       <div className="row">
         <div className="col-lg-4 col-lg-offset-4">
-          <div className="well">
+          <div className="page-header">
             <h2 className="text-center">Youtube Playlist</h2>
             <input ref="filterTextInput" value={this.props.filterText} onChange={this.handleChange} type="search" className="form-control" placeholder="Search for a user..." />
           </div>

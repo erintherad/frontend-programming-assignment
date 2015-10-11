@@ -1,3 +1,17 @@
+a {
+	color: black;
+}
+
 a:hover {
-    text-decoration: none;
+    text-decoration:none;
+    color: #ffc700;
+}
+
+table {
+	margin-top: 50px;
+
+}
+
+h2 {
+	color: #ffc700;
 }
